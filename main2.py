@@ -69,7 +69,6 @@ class Exporter(Analyzer):
             return x.string.strip()
         except:
             return x.contents[2].strip()
-
     # get the content of the article
     def getArticleContent(self, detail):
         return detail.find(class_='article_content')
@@ -86,9 +85,10 @@ class Exporter(Analyzer):
     def writeMeta(self, f,  title, date,tags,layout='post', comments='true'):
         if tags != None:
             tags='[\''+'\',\''.join(tags.split(','))+'\']'
+
         f.write('---'+'\n')
         f.write('layout: '+layout+'\n')
-        f.write('title: \''+title+'\'\n')
+        f.write('title: '+title+'\n')
         f.write('date: '+date+'\n')
         f.write('comments: '+comments+'\n')
         f.write('tags: '+tags+'\n')
@@ -228,4 +228,7 @@ def main(argv):
     parser.run(url, page, form)
 
 if __name__ == "__main__":
-   main(sys.argv[1:])
+    form='markdown'
+    link='http://blog.csdn.net//cctt_1/article/details/17580327'
+    exporter = Exporter()
+    exporter.run(link, link.split('/')[7], form)
